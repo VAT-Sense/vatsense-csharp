@@ -8,9 +8,10 @@ The REST API documentation can be found on [vatsense.com](https://vatsense.com).
 
 ## Installation
 
+Install the package from [NuGet](https://www.nuget.org/packages/Vatsense):
+
 ```bash
-git clone git@github.com:stainless-sdks/vat-sense-csharp.git
-dotnet add reference vat-sense-csharp/src/VatSense
+dotnet add package Vatsense
 ```
 
 ## Requirements
@@ -23,8 +24,8 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using VatSense;
-using VatSense.Models.Rates;
+using Vatsense;
+using Vatsense.Models.Rates;
 
 VatSenseClient client = new();
 
@@ -40,7 +41,7 @@ Console.WriteLine(rates);
 Configure the client using environment variables:
 
 ```csharp
-using VatSense;
+using Vatsense;
 
 // Configured using the VAT_SENSE_USERNAME, VAT_SENSE_PASSWORD and VAT_SENSE_BASE_URL environment variables
 VatSenseClient client = new();
@@ -49,7 +50,7 @@ VatSenseClient client = new();
 Or manually:
 
 ```csharp
-using VatSense;
+using Vatsense;
 
 VatSenseClient client = new()
 {
@@ -116,7 +117,7 @@ For non-streaming responses, you can deserialize the response into an instance o
 
 ```csharp
 using System;
-using VatSense.Models.Rates;
+using Vatsense.Models.Rates;
 
 var response = await client.WithRawResponse.Rates.List();
 RateListResponse deserialized = await response.Deserialize();
@@ -167,7 +168,7 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using VatSense;
+using Vatsense;
 
 VatSenseClient client = new() { MaxRetries = 3 };
 ```
@@ -194,7 +195,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using VatSense;
+using Vatsense;
 
 VatSenseClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
@@ -220,7 +221,7 @@ To route requests through a proxy, configure your client with a custom [`HttpCli
 ```csharp
 using System.Net;
 using System.Net.Http;
-using VatSense;
+using Vatsense;
 
 var httpClient = new HttpClient
 (
@@ -244,7 +245,7 @@ To set undocumented parameters, a constructor exists that accepts dictionaries f
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using VatSense.Models.Rates;
+using Vatsense.Models.Rates;
 
 RateListParams parameters = new
 (
@@ -272,7 +273,7 @@ This can also be used to set a documented parameter to an undocumented or not ye
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using VatSense.Models.Rates;
+using Vatsense.Models.Rates;
 
 var parameters = RateCalculatePriceParams.FromRawUnchecked
 (
@@ -295,7 +296,7 @@ Undocumented properties, or undocumented values of documented properties, on nes
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using VatSense.Models.Invoice;
+using Vatsense.Models.Invoice;
 
 InvoiceCreateParams parameters = new()
 {
@@ -314,7 +315,7 @@ Required properties on the nested parameter can also be changed or omitted using
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using VatSense.Models.Invoice;
+using Vatsense.Models.Invoice;
 
 InvoiceCreateParams parameters = new()
 {
@@ -360,7 +361,7 @@ rates.Validate();
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using VatSense;
+using Vatsense;
 
 VatSenseClient client = new() { ResponseValidation = true };
 ```
@@ -388,4 +389,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/vat-sense-csharp/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/VAT-Sense/vatsense-csharp/issues) with questions, bugs, or suggestions.
