@@ -6,7 +6,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Copyright>Copyright 2026 Vat Sense</Copyright>
     <PackageProjectUrl>https://vatsense.com</PackageProjectUrl>
-    <RepositoryUrl>https://www.github.com/stainless-sdks/vat-sense-csharp</RepositoryUrl>
+    <RepositoryUrl>https://www.github.com/VAT-Sense/vatsense-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <!-- Documentation-->
