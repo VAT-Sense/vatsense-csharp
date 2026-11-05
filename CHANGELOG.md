@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.3.0...v0.3.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* read EORI company results as EoriValidationCompany ([978e3bc](https://github.com/VAT-Sense/vatsense-csharp/commit/978e3bc0186de99f68ca2410270ab9663dd4dc73))
+* read EORI company results as EoriValidationCompany ([72c93d0](https://github.com/VAT-Sense/vatsense-csharp/commit/72c93d0ce9b8243adfabc9cffa7f00c25116fdfe))
+
 ## [0.3.0](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.2.0...v0.3.0) (2026-11-05)
 
 
