@@ -238,6 +238,43 @@ public record class InvoiceCreateParams : ParamsBase
     }
 
     /// <summary>
+    /// For a credit note: the ID of your own sale invoice it credits. Only a `refund` can
+    /// name one; anything else gets `400` "Invalid Original Invoice ID".
+    /// </summary>
+    public string? OriginalInvoiceId
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("original_invoice_id");
+        }
+        init { this._rawBodyData.Set("original_invoice_id", value); }
+    }
+
+    /// <summary>
+    /// Sent as the `Idempotency-Key` header to retry a create safely: a repeat with the
+    /// same key and the same body, byte for byte, creates nothing and returns the invoice
+    /// the first request made. 1 to 255 characters, unique to this invoice.
+    /// </summary>
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    /// <summary>
     /// Pad the auto-generated invoice number with leading zeros to this length.
     /// </summary>
     public long? PadInvoiceNumber

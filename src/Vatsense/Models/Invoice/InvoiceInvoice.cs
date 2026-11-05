@@ -161,7 +161,7 @@ public sealed record class InvoiceInvoice : JsonModel
     }
 
     /// <summary>
-    /// Unique URL to view the invoice. Append "/pdf" to download a PDF copy.
+    /// Unique, unguessable URL to view the invoice. Append "/pdf" for a PDF copy.
     /// </summary>
     public string? InvoiceUrl
     {
@@ -246,6 +246,19 @@ public sealed record class InvoiceInvoice : JsonModel
             return this._rawData.GetNullableClass<string>("notes");
         }
         init { this._rawData.Set("notes", value); }
+    }
+
+    /// <summary>
+    /// On a credit note that names the sale invoice it credits: that invoice's ID.
+    /// </summary>
+    public string? OriginalInvoiceId
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("original_invoice_id");
+        }
+        init { this._rawData.Set("original_invoice_id", value); }
     }
 
     public long? NumItems
@@ -416,6 +429,7 @@ public sealed record class InvoiceInvoice : JsonModel
             item.Validate();
         }
         _ = this.Notes;
+        _ = this.OriginalInvoiceId;
         _ = this.NumItems;
         this.Object?.Validate();
         _ = this.TaxPoint;

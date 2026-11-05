@@ -167,12 +167,34 @@ public sealed record class Data : JsonModel
         }
     }
 
+    /// <summary>
+    /// Only when a `match_` parameter was sent.
+    /// </summary>
+    public Match? Match
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Match>("match");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("match", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         this.Company?.Validate();
         _ = this.ConsultationNumber;
         _ = this.Valid;
+        this.Match?.Validate();
     }
 
     public Data() { }
@@ -208,6 +230,211 @@ class DataFromRaw : IFromRawJson<Data>
     /// <inheritdoc/>
     public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Data.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// The result of company detail matching: only when a `match_` parameter was sent.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Match, MatchFromRaw>))]
+public sealed record class Match : JsonModel
+{
+    /// <summary>
+    /// One entry for each detail sent (company_name, address, street, postcode, city).
+    /// </summary>
+    public IReadOnlyDictionary<string, MatchField>? Fields
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Dictionary<string, MatchField>>("fields");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("fields", new Dictionary<string, MatchField>(value));
+        }
+    }
+
+    /// <summary>
+    /// likely (a score of 80 or more, and the name, if sent, is not a no_match), possible
+    /// (50 to 79), unlikely (under 50), or not_applicable when nothing could be compared.
+    /// </summary>
+    public string? Result
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("result");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("result", value);
+        }
+    }
+
+    /// <summary>
+    /// The average of the details sent, with the name counting twice. Null when not_applicable.
+    /// </summary>
+    public long? Score
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("score");
+        }
+        init { this._rawData.Set("score", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        if (this.Fields != null)
+        {
+            foreach (var field in this.Fields.Values)
+            {
+                field.Validate();
+            }
+        }
+        _ = this.Result;
+        _ = this.Score;
+    }
+
+    public Match() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Match(Match match)
+        : base(match) { }
+#pragma warning restore CS8618
+
+    public Match(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Match(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="MatchFromRaw.FromRawUnchecked"/>
+    public static Match FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class MatchFromRaw : IFromRawJson<Match>
+{
+    /// <inheritdoc/>
+    public Match FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Match.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// How one detail you sent compared with the registered details.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<MatchField, MatchFieldFromRaw>))]
+public sealed record class MatchField : JsonModel
+{
+    /// <summary>
+    /// One of "match", "partial", "no_match" or "not_applicable".
+    /// </summary>
+    public string? Result
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("result");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("result", value);
+        }
+    }
+
+    public long? Score
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("score");
+        }
+        init { this._rawData.Set("score", value); }
+    }
+
+    /// <summary>
+    /// VIES's own answer for that detail on a live EU check ("valid", "invalid" or
+    /// "not_processed"); null when VIES said nothing.
+    /// </summary>
+    public string? Vies
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("vies");
+        }
+        init { this._rawData.Set("vies", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Result;
+        _ = this.Score;
+        _ = this.Vies;
+    }
+
+    public MatchField() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public MatchField(MatchField matchField)
+        : base(matchField) { }
+#pragma warning restore CS8618
+
+    public MatchField(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    MatchField(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="MatchFieldFromRaw.FromRawUnchecked"/>
+    public static MatchField FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class MatchFieldFromRaw : IFromRawJson<MatchField>
+{
+    /// <inheritdoc/>
+    public MatchField FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MatchField.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(CompanyConverter))]
