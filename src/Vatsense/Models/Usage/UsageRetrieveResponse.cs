@@ -197,7 +197,7 @@ public sealed record class Requests : JsonModel
     }
 
     /// <summary>
-    /// Total requests allowed on your plan.
+    /// Requests available in the current billing period.
     /// </summary>
     public long? Total
     {
@@ -218,7 +218,7 @@ public sealed record class Requests : JsonModel
     }
 
     /// <summary>
-    /// Requests used in the last 30 days.
+    /// Requests used so far in the current billing period.
     /// </summary>
     public long? Used
     {

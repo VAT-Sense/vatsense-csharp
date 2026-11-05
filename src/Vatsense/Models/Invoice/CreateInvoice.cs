@@ -221,6 +221,20 @@ public sealed record class CreateInvoice : JsonModel
     }
 
     /// <summary>
+    /// For a credit note: the ID of your own sale invoice it credits. Only a `refund` can
+    /// name one; anything else gets `400` "Invalid Original Invoice ID".
+    /// </summary>
+    public string? OriginalInvoiceId
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("original_invoice_id");
+        }
+        init { this._rawData.Set("original_invoice_id", value); }
+    }
+
+    /// <summary>
     /// Pad the auto-generated invoice number with leading zeros to this length.
     /// </summary>
     public long? PadInvoiceNumber
@@ -346,6 +360,7 @@ public sealed record class CreateInvoice : JsonModel
         _ = this.IsCopy;
         _ = this.IsReverseCharge;
         _ = this.Notes;
+        _ = this.OriginalInvoiceId;
         _ = this.PadInvoiceNumber;
         _ = this.Serial;
         this.TaxType?.Validate();

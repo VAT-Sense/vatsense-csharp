@@ -107,6 +107,29 @@ public record class RateListParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Whether to list province and territory rates (rate objects that carry a `province`
+    /// property) in each country's `other` list. Pass false to leave them out, so only
+    /// country-wide rates are listed; true, or omitting the parameter, lists them as before.
+    /// </summary>
+    public bool? Provinces
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("provinces");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("provinces", value);
+        }
+    }
+
     public RateListParams() { }
 
 #pragma warning disable CS8618

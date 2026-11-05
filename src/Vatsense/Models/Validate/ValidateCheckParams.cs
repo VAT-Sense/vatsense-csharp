@@ -97,6 +97,113 @@ public record class ValidateCheckParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// The whole address you hold, as one line, matched against the registered address.
+    /// </summary>
+    public string? MatchAddress
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("match_address");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("match_address", value);
+        }
+    }
+
+    /// <summary>
+    /// The town or city you hold, looked for in the registered address.
+    /// </summary>
+    public string? MatchCity
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("match_city");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("match_city", value);
+        }
+    }
+
+    /// <summary>
+    /// The company name you hold, matched against the registered name. Legal forms such
+    /// as Ltd or GmbH, accents, punctuation and word order are ignored. Sending any
+    /// `match_` parameter adds `match` to the response; matching costs nothing extra.
+    /// </summary>
+    public string? MatchCompanyName
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("match_company_name");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("match_company_name", value);
+        }
+    }
+
+    /// <summary>
+    /// The postcode you hold, looked for in the registered address. Spaces are ignored.
+    /// </summary>
+    public string? MatchPostcode
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("match_postcode");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("match_postcode", value);
+        }
+    }
+
+    /// <summary>
+    /// The street line you hold, looked for in the registered address.
+    /// </summary>
+    public string? MatchStreet
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("match_street");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("match_street", value);
+        }
+    }
+
     public ValidateCheckParams() { }
 
 #pragma warning disable CS8618
