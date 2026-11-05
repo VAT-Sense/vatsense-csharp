@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.2.0...v0.3.0) (2026-11-05)
+
+
+### Features
+
+* **api:** company matching, provinces filter, Idempotency-Key and credit notes ([#3](https://github.com/VAT-Sense/vatsense-csharp/issues/3)) ([98291e7](https://github.com/VAT-Sense/vatsense-csharp/commit/98291e7479046c26f66d082c1316a9670e68284a))
+
 ## 0.2.0 (2026-04-01)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.1.0...v0.2.0)
