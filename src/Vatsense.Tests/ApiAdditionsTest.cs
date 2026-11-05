@@ -34,10 +34,17 @@ public class ApiAdditionsTest
                 ItExpr.IsAny<CancellationToken>()
             )
             .Returns(
-                async (HttpRequestMessage request, CancellationToken _) =>
+                async (HttpRequestMessage request, CancellationToken ct) =>
                 {
-                    string? body =
-                        request.Content == null ? null : await request.Content.ReadAsStringAsync();
+                    string? body = null;
+                    if (request.Content != null)
+                    {
+#if NET
+                        body = await request.Content.ReadAsStringAsync(ct);
+#else
+                        body = await request.Content.ReadAsStringAsync();
+#endif
+                    }
                     sent.Add((request, body));
                     return new HttpResponseMessage()
                     {
