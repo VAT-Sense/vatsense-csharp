@@ -2,6 +2,7 @@ using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Vatsense.Core;
@@ -255,7 +256,10 @@ public sealed record class Match : JsonModel
                 return;
             }
 
-            this._rawData.Set("fields", new Dictionary<string, MatchField>(value));
+            this._rawData.Set(
+                "fields",
+                Enumerable.ToDictionary(value, (e) => e.Key, (e) => e.Value)
+            );
         }
     }
 
