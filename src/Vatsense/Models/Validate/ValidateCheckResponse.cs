@@ -687,6 +687,28 @@ sealed class CompanyConverter : JsonConverter<Company>
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        // Every field on both variants is optional, so either would accept any
+        // company object. An EORI result is the one carrying eori_number.
+        if (
+            element.ValueKind == JsonValueKind.Object
+            && element.TryGetProperty("eori_number", out _)
+        )
+        {
+            try
+            {
+                var eori = JsonSerializer.Deserialize<EoriValidationCompany>(element, options);
+                if (eori != null)
+                {
+                    eori.Validate();
+                    return new(eori, element);
+                }
+            }
+            catch (Exception e) when (e is JsonException || e is VatSenseInvalidDataException)
+            {
+                // ignore
+            }
+        }
+
         try
         {
             var deserialized = JsonSerializer.Deserialize<ValidationCompany>(element, options);
