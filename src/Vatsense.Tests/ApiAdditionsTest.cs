@@ -143,8 +143,8 @@ public class ApiAdditionsTest
         );
 
         var query = sent.Single().Request.RequestUri!.Query;
-        Assert.Contains("match_company_name=Weio%20Ltd", query);
-        Assert.Contains("match_postcode=SW3%201GL", query);
+        Assert.Contains("match_company_name=Weio+Ltd", query);
+        Assert.Contains("match_postcode=SW3+1GL", query);
         Assert.Equal("likely", result.Data!.Match!.Result);
         Assert.Equal(90, result.Data.Match.Score);
         Assert.Equal(100, result.Data.Match.Fields!["company_name"].Score);
