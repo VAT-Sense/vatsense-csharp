@@ -101,7 +101,10 @@ public class ApiAdditionsTest
         var (request, body) = sent.Single();
         Assert.Equal("order-203", request.Headers.GetValues("Idempotency-Key").Single());
         using var json = JsonDocument.Parse(body!);
-        Assert.Equal("in5aeae457cda2a", json.RootElement.GetProperty("original_invoice_id").GetString());
+        Assert.Equal(
+            "in5aeae457cda2a",
+            json.RootElement.GetProperty("original_invoice_id").GetString()
+        );
         Assert.False(json.RootElement.TryGetProperty("Idempotency-Key", out _));
     }
 
