@@ -121,6 +121,12 @@ public sealed class VatSenseClient : IVatSenseClient
         get { return _sandbox.Value; }
     }
 
+    readonly Lazy<IBatchService> _batches;
+    public IBatchService Batches
+    {
+        get { return _batches.Value; }
+    }
+
     public void Dispose() => this.HttpClient.Dispose();
 
     public VatSenseClient()
@@ -135,6 +141,7 @@ public sealed class VatSenseClient : IVatSenseClient
         _invoice = new(() => new InvoiceService(this));
         _usage = new(() => new UsageService(this));
         _sandbox = new(() => new SandboxService(this));
+        _batches = new(() => new BatchService(this));
     }
 
     public VatSenseClient(ClientOptions options)
@@ -257,6 +264,12 @@ public sealed class VatSenseClientWithRawResponse : IVatSenseClientWithRawRespon
     public ISandboxServiceWithRawResponse Sandbox
     {
         get { return _sandbox.Value; }
+    }
+
+    readonly Lazy<IBatchServiceWithRawResponse> _batches;
+    public IBatchServiceWithRawResponse Batches
+    {
+        get { return _batches.Value; }
     }
 
     /// <inheritdoc/>
@@ -464,6 +477,7 @@ public sealed class VatSenseClientWithRawResponse : IVatSenseClientWithRawRespon
         _invoice = new(() => new InvoiceServiceWithRawResponse(this));
         _usage = new(() => new UsageServiceWithRawResponse(this));
         _sandbox = new(() => new SandboxServiceWithRawResponse(this));
+        _batches = new(() => new BatchServiceWithRawResponse(this));
     }
 
     public VatSenseClientWithRawResponse(ClientOptions options)

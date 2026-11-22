@@ -76,6 +76,31 @@ public record class ValidateCheckParams : ParamsBase
     }
 
     /// <summary>
+    /// Send <c>true</c> with <see cref="RequesterVatNumber"/> if you would rather have an
+    /// answer than wait for a consultation number. When VIES cannot answer for the
+    /// number's country and that country has a national register fallback, the answer
+    /// comes from the register with no <c>consultation_number</c>, instead of the
+    /// <c>412</c>.
+    /// </summary>
+    public bool? ConsultationOptional
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("consultation_optional");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("consultation_optional", value);
+        }
+    }
+
+    /// <summary>
     /// The VAT number to validate. Must include the leading 2-character country code
     /// (e.g. "GB288305674", "FR12345678901").
     /// </summary>
