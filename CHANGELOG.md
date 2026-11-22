@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.3.1...v0.4.0) (2026-11-22)
+
+
+### Features
+
+* **api:** batches, consultation_optional, confirmation_number and webhook signatures ([#8](https://github.com/VAT-Sense/vatsense-csharp/issues/8)) ([cb5f8c3](https://github.com/VAT-Sense/vatsense-csharp/commit/cb5f8c34c0519c76406deea114236bb34d2cadc0))
+
 ## [0.3.1](https://github.com/VAT-Sense/vatsense-csharp/compare/v0.3.0...v0.3.1) (2026-11-05)
 
 
