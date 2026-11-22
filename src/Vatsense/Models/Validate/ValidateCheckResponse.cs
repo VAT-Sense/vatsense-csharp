@@ -135,6 +135,21 @@ public sealed record class Data : JsonModel
     }
 
     /// <summary>
+    /// VAT Sense's own reference for this check, a signed record of the time, the
+    /// answer and its source. It is not an official number. In beta, so only on
+    /// accounts that have it turned on.
+    /// </summary>
+    public string? ConfirmationNumber
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("confirmation_number");
+        }
+        init { this._rawData.Set("confirmation_number", value); }
+    }
+
+    /// <summary>
     /// Official consultation number (only returned when requester_vat_number is provided).
     /// </summary>
     public string? ConsultationNumber
@@ -193,6 +208,7 @@ public sealed record class Data : JsonModel
     public override void Validate()
     {
         this.Company?.Validate();
+        _ = this.ConfirmationNumber;
         _ = this.ConsultationNumber;
         _ = this.Valid;
         this.Match?.Validate();

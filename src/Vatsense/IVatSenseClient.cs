@@ -72,6 +72,8 @@ public interface IVatSenseClient : IDisposable
     IUsageService Usage { get; }
 
     ISandboxService Sandbox { get; }
+
+    IBatchService Batches { get; }
 }
 
 /// <summary>
@@ -124,6 +126,8 @@ public interface IVatSenseClientWithRawResponse : IDisposable
     IUsageServiceWithRawResponse Usage { get; }
 
     ISandboxServiceWithRawResponse Sandbox { get; }
+
+    IBatchServiceWithRawResponse Batches { get; }
 
     /// <summary>
     /// Sends a request to the Vat Sense REST API.
